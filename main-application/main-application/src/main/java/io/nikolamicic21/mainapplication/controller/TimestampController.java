@@ -16,15 +16,16 @@ import java.time.ZonedDateTime;
 public class TimestampController {
 
     private static final String UUID = java.util.UUID.randomUUID().toString();
-
     private static ZonedDateTime timestamp = ZonedDateTime.now();
 
     private final WebClient webClient;
+    private final String message;
 
     public TimestampController(
             WebClient.Builder webClientBuilder,
             @Value("${service.ping.url}") String url,
-            @Value("${service.ping.endpoint.count}") String endpoint) {
+            @Value("${service.ping.endpoint.count}") String endpoint,
+            @Value("${MESSAGE}") String message) {
         final var uriComponents = UriComponentsBuilder
                 .fromHttpUrl(url)
                 .path(endpoint)
@@ -32,6 +33,7 @@ public class TimestampController {
         this.webClient = webClientBuilder
                 .baseUrl(uriComponents.toString())
                 .build();
+        this.message = message;
     }
 
     @GetMapping
@@ -41,9 +43,12 @@ public class TimestampController {
                         clientResponse.bodyToMono(String.class))
                 .block();
 
-        return String.format("%s\nPing / Pongs: %s",
+        return String.format(
+                "%s\n%s\nPing / Pongs: %s",
+                this.message,
                 timestamp + ": " + UUID,
-                pingCount);
+                pingCount
+        );
     }
 
     @Scheduled(fixedDelay = 5000L)

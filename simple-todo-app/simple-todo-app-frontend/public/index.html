@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index Page</title>
+</head>
+<body>
+<img id="random-image" style="width: 320px;"
+     src=""/>
+<div>
+    <input id="text-input" type="text" maxlength="140"/>
+    <button id="submit-button">Create TODO</button>
+    <br>
+    <ul id="todo-list">
+    </ul>
+</div>
+<script>
+    window.addEventListener('load', () => {
+        const randomImage = document.querySelector('#random-image');
+        fetch('http://localhost:8080/images/random')
+            .then(data => data.text())
+            .then(body => {
+                randomImage.setAttribute('src', 'data:image/jpeg;base64,'.concat(body));
+            });
+
+        const submitButton = document.querySelector('#submit-button');
+        const todos = document.querySelector('#todo-list')
+        submitButton.addEventListener('click', () => {
+            const textInput = document.querySelector('#text-input');
+            if (textInput.value) {
+                const body = {title: textInput.value};
+                fetch('http://localhost:8080/todos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(body),
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        const todo = document.createElement('li');
+                        todo.innerHTML = data.title;
+                        todos.appendChild(todo);
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+            }
+        });
+    });
+</script>
+</body>
+</html>
