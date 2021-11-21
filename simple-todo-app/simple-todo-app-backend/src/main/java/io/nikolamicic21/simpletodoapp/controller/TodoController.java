@@ -1,26 +1,24 @@
 package io.nikolamicic21.simpletodoapp.controller;
 
 import io.nikolamicic21.simpletodoapp.model.Todo;
+import io.nikolamicic21.simpletodoapp.repository.TodoRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
-import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 @RequestMapping("/todos")
+@RequiredArgsConstructor
 public class TodoController {
 
-    private final Collection<Todo> todos = ConcurrentHashMap.newKeySet();
+    private final TodoRepository todoRepository;
 
     @GetMapping
-    public Collection<Todo> getAll() {
-        return this.todos;
+    public Iterable<Todo> getAll() {
+        return this.todoRepository.findAll();
     }
 
     @PostMapping
     public Todo add(@RequestBody Todo todo) {
-        this.todos.add(todo);
-
-        return todo;
+        return this.todoRepository.save(todo);
     }
 }
