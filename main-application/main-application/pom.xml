@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.nikolamicic21</groupId>
 	<artifactId>main-application</artifactId>
-	<version>2.0.6</version>
+	<version>3.0.2</version>
 	<name>main-application</name>
 	<description>Demo project for Spring Boot</description>
 
@@ -32,6 +32,10 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
