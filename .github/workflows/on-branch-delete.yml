@@ -21,8 +21,8 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
-          project_id: ${PROJECT_ID}
-          service_account_key: ${GKE_KEY}
+          project_id: $PROJECT_ID
+          service_account_key: $GKE_KEY
 
       # Get the GKE credentials so we can deploy to the cluster
       - name: Set up GKE credentials
