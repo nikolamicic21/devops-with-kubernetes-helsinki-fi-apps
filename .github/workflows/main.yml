@@ -15,6 +15,7 @@ env:
   GKE_CLUSTER: dwk-cluster
   GKE_ZONE: europe-central2-b
   IMAGE_FRONTEND: simple-todo-app-frontend
+  DEPLOYMENT_NAME_FRONTEND: simple-todo-app-frontend-dep
 
 jobs:
   setup-build-publish-deploy:
@@ -64,5 +65,5 @@ jobs:
         run: |-
           kustomize edit set image gcr.io/PROJECT_ID/IMAGE=gcr.io/$PROJECT_ID/$IMAGE_FRONTEND:${GITHUB_REF#refs/heads/}-$GITHUB_SHA
           kustomize build . | kubectl apply -f -
-          kubectl rollout status deployment ${IMAGE_FRONTEND}-dep
+          kubectl rollout status deployment/$DEPLOYMENT_NAME_FRONTEND
           kubectl get services -o wide
