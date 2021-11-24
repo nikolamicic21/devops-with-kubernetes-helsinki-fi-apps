@@ -28,6 +28,6 @@ jobs:
           gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
 
       # Delete Environment (namespace) in GKE
-      - name: Deploy
+      - name: Delete namespace
         run: |-
           kubectl delete namespace ${{ github.event.ref }}
