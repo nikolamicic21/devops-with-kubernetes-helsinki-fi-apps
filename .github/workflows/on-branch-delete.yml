@@ -1,0 +1,29 @@
+name: On branch DELETE
+
+on:
+  - delete
+
+jobs:
+  clear-environment:
+    name: Clear GKE Environment
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          project_id: ${{ secrets.GKE_PROJECT }}
+          service_account_key: ${{ secrets.GKE_SA_KEY }}
+
+      # Get the GKE credentials so we can deploy to the cluster
+      - name: Set up GKE credentials
+        run: |-
+          gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+
+      # Delete Environment (namespace) in GKE
+      - name: Deploy
+        run: |-
+          kubectl delete namespace ${GITHUB_REF#refs/heads/}
