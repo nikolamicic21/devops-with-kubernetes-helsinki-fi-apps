@@ -30,4 +30,4 @@ jobs:
       # Delete Environment (namespace) in GKE
       - name: Deploy
         run: |-
-          kubectl delete namespace ${GITHUB_REF#refs/heads/}
+          kubectl delete namespace ${{ github.event.ref }}
