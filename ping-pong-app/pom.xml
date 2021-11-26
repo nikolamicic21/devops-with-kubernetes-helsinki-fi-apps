@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.nikolamicic21</groupId>
 	<artifactId>ping-pong-app</artifactId>
-	<version>3.0.2</version>
+	<version>4.0.1</version>
 	<name>ping-pong-app</name>
 	<description>Demo project for Spring Boot</description>
 

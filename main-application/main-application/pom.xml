@@ -10,12 +10,12 @@
 	</parent>
 	<groupId>io.nikolamicic21</groupId>
 	<artifactId>main-application</artifactId>
-	<version>3.0.2</version>
+	<version>4.0.1</version>
 	<name>main-application</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
