@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>io.nikolamicic21</groupId>
 	<artifactId>simple-todo-app-backend</artifactId>
-	<version>4.0.2</version>
+	<version>4.0.5</version>
 	<name>simple-todo-app-backend</name>
 	<description>Demo project for Spring Boot</description>
 

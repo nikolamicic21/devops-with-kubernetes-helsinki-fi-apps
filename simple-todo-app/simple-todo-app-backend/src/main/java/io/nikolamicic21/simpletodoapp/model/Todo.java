@@ -22,6 +22,10 @@ public class Todo {
     @Column(name = "title", nullable = false)
     private String title;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private TodoStatus status;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
