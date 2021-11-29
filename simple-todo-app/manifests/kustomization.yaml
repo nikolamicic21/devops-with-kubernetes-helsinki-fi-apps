@@ -7,4 +7,4 @@ resources:
 images:
 - name: SIMPLE_TODO_APP_FRONTEND_IMAGE
   newName: mickeckemi21/simple-todo-app-frontend
-  newTag: 7f5871f7112827647823341164b6693665edc121
+  newTag: fe785dc2fb5e1eceda96b286487bc4fa916ff367
