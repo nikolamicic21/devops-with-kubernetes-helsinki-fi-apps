@@ -50,7 +50,7 @@ jobs:
       # Commit and push
       - uses: EndBug/add-and-commit@v7
         with:
-          add: 'simple-todo-app/manifests/kustomization.yml'
+          add: 'simple-todo-app/manifests/kustomization.yaml'
           message: New version release for gitops-app ${{ github.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.REPO_API_TOKEN }}
