@@ -14,3 +14,11 @@ services:
     restart: always
     ports:
       - "8090:8080"
+  # docker run -p 4222:4222 -p 8222:8222 -p 6222:6222 --name nats-server -ti nats:latest
+  nats-server:
+    image: nats:2.6.5-alpine
+    restart: always
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+      - "6222:6222"

@@ -2,12 +2,14 @@ package io.nikolamicic21.simpletodoapp.controller;
 
 import io.nikolamicic21.simpletodoapp.dto.CreateTodoDto;
 import io.nikolamicic21.simpletodoapp.dto.UpdateTodoDto;
+import io.nikolamicic21.simpletodoapp.event.TodoMutationEvent;
 import io.nikolamicic21.simpletodoapp.exception.ResourceNotFoundException;
 import io.nikolamicic21.simpletodoapp.model.Todo;
 import io.nikolamicic21.simpletodoapp.model.TodoStatus;
 import io.nikolamicic21.simpletodoapp.repository.TodoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -21,6 +23,7 @@ import static java.lang.String.format;
 class TodoController {
 
     private final TodoRepository todoRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @GetMapping
     Iterable<Todo> getAll() {
@@ -30,7 +33,10 @@ class TodoController {
     @PostMapping
     Todo add(@Valid @RequestBody CreateTodoDto todoDto) {
         log.info("Received Todo create request object: {}", todoDto.toString());
-        return this.todoRepository.save(mapDtoToTodo(todoDto));
+        final var savedTodo = this.todoRepository.save(mapDtoToTodo(todoDto));
+        this.eventPublisher.publishEvent(new TodoMutationEvent(savedTodo));
+
+        return savedTodo;
     }
 
     @PutMapping("/{id}")
@@ -42,7 +48,10 @@ class TodoController {
                     if (todoDto.getStatus() != null) {
                         todo.setStatus(todoDto.getStatus());
                     }
-                    return this.todoRepository.save(todo);
+                    final var updatedTodo = this.todoRepository.save(todo);
+                    this.eventPublisher.publishEvent(new TodoMutationEvent(updatedTodo));
+
+                    return updatedTodo;
                 })
                 .orElseThrow(() ->
                         new ResourceNotFoundException(format("No Todo resource with id %s", id)));

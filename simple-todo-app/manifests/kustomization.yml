@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - simple-todo-app-namespace.yml
+  - simple-todo-app-frontend-deployment.yml
+  - simple-todo-app-frontend-service.yml
+images:
+  - name: SIMPLE_TODO_APP_FRONTEND_IMAGE
+    newName: mickeckemi21/simple-todo-app-frontend
+    newTag: latest
